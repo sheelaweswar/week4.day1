@@ -22,10 +22,12 @@ public class AmazonAss {
 		objcrmdriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		objcrmdriver.findElement(By.xpath("//input[@id='twotabsearchtextbox']")).sendKeys("oneplus 9 pro ",Keys.ENTER);
 		String price = objcrmdriver.findElement(By.xpath("(//span[@class='a-price-whole'])[1]")).getText();
+		
 		objcrmdriver.findElement(By.xpath("(//span[@class='a-size-medium a-color-base a-text-normal'])[1]")).click();
 		Set<String> windowHandles = objcrmdriver.getWindowHandles();
 		List<String> newWindow=new LinkedList<String>(windowHandles);
 		objcrmdriver.switchTo().window(newWindow.get(1));
+		
 		System.out.println(objcrmdriver.findElement(By.xpath("(//span[@id='acrCustomerReviewText'])[1]")).getText());
 		System.out.println(price);
 		objcrmdriver.findElement(By.xpath("(//img[@class='imgSwatch'])[1]")).click();
@@ -34,16 +36,15 @@ public class AmazonAss {
 		objcrmdriver.switchTo().window(newWindow.get(1));
 		Thread.sleep(3000);
 		String cart = objcrmdriver.findElement(By.xpath("//span[@id='attach-accessory-cart-subtotal']")).getText();
-		System.out.println("cart:"+cart);
-		//String strPrice = price.replaceAll(",","").replaceAll("\\?","");
-		//String strCart = cart.replaceAll(",","").replaceAll("\\?","");
-		//System.out.println("strPrice:"+strPrice);
-		//System.out.println("strCart:"+strCart);
-		//if(Float.parseFloat(strPrice) == Float.parseFloat(strCart)) {
-		if(price.equals(cart)) {
-			System.out.println("Matching");
+		String replacecart = cart.replaceAll("₹", "").replaceAll(",", "");
+		String replaceprice = price.replaceAll(",", "");
+		int a = Integer.parseInt(replaceprice);
+		float val = Float.parseFloat(replacecart);
+		int x = (int)val;
+		if(a == x) {
+			System.out.println("Price is Matching");
 		}else {
-			System.out.println("Not Matching");
+			System.out.println("Price is Not Matching");
 		}
 	}
 }
