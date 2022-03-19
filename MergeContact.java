@@ -1,6 +1,7 @@
 package week4.day1;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -35,22 +36,19 @@ public class MergeContact {
 		List<String> newWindow=new LinkedList<String>(windowHandles);
 		objcrmdriver.switchTo().window(newWindow.get(1));
 		objcrmdriver.findElement(By.xpath("(//a[@class='linktext'])[1]")).click();
-		
 		objcrmdriver.switchTo().window(newWindow.get(0));
-		//2nd icon
-		//objcrmdriver.findElement(By.xpath("(//img[@alt='Lookup'])[2]")).click();
-		//objcrmdriver.switchTo().window(newWindow.get(1));
-		
-		//objcrmdriver.findElement(By.xpath("(//table[@class='x-grid3-row-table'])[2]//a[@class='linktext']")).click();
-		
-		objcrmdriver.findElement(By.xpath("//a[contains(text(),'Merge Contacts')]")).click();
+		objcrmdriver.findElement(By.xpath("(//img[@alt='Lookup'])[2]")).click();
+		Set<String> windowHandles1 = objcrmdriver.getWindowHandles();
+		List<String> newWindow1=new ArrayList<String>(windowHandles1);
+		objcrmdriver.switchTo().window(newWindow1.get(1));
+
+		objcrmdriver.findElement(By.xpath("(//table[@class='x-grid3-row-table'])[2]//a[@class='linktext']")).click();
+		objcrmdriver.switchTo().window(newWindow1.get(0));
+		objcrmdriver.findElement(By.xpath("//a[text()='Merge']")).click();
 		Alert alert = objcrmdriver.switchTo().alert();
 		alert.accept();
-		System.out.println(objcrmdriver.getTitle());
-		
-		
-		
-		
+		String title = objcrmdriver.getTitle();
+		System.out.println(title);
 
 	}
 
